@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{17CE77C0-3A99-4E4B-9190-240C85A0BFDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{0D075DB1-890C-4C43-9644-ABA56BA9010F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{0275429B-6733-4E0D-8297-E245CBB5CD57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{2AC143B2-2C2C-4FB4-9F37-743E503640BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5034EAF3-403A-4B27-9250-FDC5A911D2EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Web", "Presentation\Alza.Web\Alza.Web.csproj", "{2887E1DE-9950-417D-AAE5-AF7DC1797707}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2887E1DE-9950-417D-AAE5-AF7DC1797707} = {17CE77C0-3A99-4E4B-9190-240C85A0BFDF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACC22D90-C536-4A01-BFB8-1B3B5F39EE9A}
+	EndGlobalSection
+EndGlobal
