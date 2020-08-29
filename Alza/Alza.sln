@@ -15,6 +15,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5034EAF3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Web", "Presentation\Alza.Web\Alza.Web.csproj", "{2887E1DE-9950-417D-AAE5-AF7DC1797707}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Application.Web", "Application\Alza.Application.Web\Alza.Application.Web.csproj", "{AE8036A1-6D8D-49EC-B88B-FD50B2D503B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Domain", "Domain\Alza.Domain\Alza.Domain.csproj", "{CCA5E18D-E069-4ADA-B137-718EEA12EC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Domain.Abstractions", "Domain\Alza.Domain.Abstractions\Alza.Domain.Abstractions.csproj", "{FBB1DF24-C59A-4456-A715-A445C3946950}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Domain.Services", "Domain\Alza.Domain.Services\Alza.Domain.Services.csproj", "{F457397F-FCF0-4DFE-83E7-3F0401FBC5C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Infrastructure.SqlServer", "Infrastructure\Alza.Infrastructure.SqlServer\Alza.Infrastructure.SqlServer.csproj", "{280A54EA-F707-4683-9C9B-79035A5137AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +35,37 @@ Global
 		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2887E1DE-9950-417D-AAE5-AF7DC1797707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE8036A1-6D8D-49EC-B88B-FD50B2D503B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE8036A1-6D8D-49EC-B88B-FD50B2D503B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE8036A1-6D8D-49EC-B88B-FD50B2D503B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE8036A1-6D8D-49EC-B88B-FD50B2D503B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA5E18D-E069-4ADA-B137-718EEA12EC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA5E18D-E069-4ADA-B137-718EEA12EC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA5E18D-E069-4ADA-B137-718EEA12EC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA5E18D-E069-4ADA-B137-718EEA12EC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB1DF24-C59A-4456-A715-A445C3946950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB1DF24-C59A-4456-A715-A445C3946950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB1DF24-C59A-4456-A715-A445C3946950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB1DF24-C59A-4456-A715-A445C3946950}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F457397F-FCF0-4DFE-83E7-3F0401FBC5C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F457397F-FCF0-4DFE-83E7-3F0401FBC5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F457397F-FCF0-4DFE-83E7-3F0401FBC5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F457397F-FCF0-4DFE-83E7-3F0401FBC5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{280A54EA-F707-4683-9C9B-79035A5137AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{280A54EA-F707-4683-9C9B-79035A5137AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{280A54EA-F707-4683-9C9B-79035A5137AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{280A54EA-F707-4683-9C9B-79035A5137AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2887E1DE-9950-417D-AAE5-AF7DC1797707} = {17CE77C0-3A99-4E4B-9190-240C85A0BFDF}
+		{AE8036A1-6D8D-49EC-B88B-FD50B2D503B3} = {0D075DB1-890C-4C43-9644-ABA56BA9010F}
+		{CCA5E18D-E069-4ADA-B137-718EEA12EC4A} = {0275429B-6733-4E0D-8297-E245CBB5CD57}
+		{FBB1DF24-C59A-4456-A715-A445C3946950} = {0275429B-6733-4E0D-8297-E245CBB5CD57}
+		{F457397F-FCF0-4DFE-83E7-3F0401FBC5C1} = {0275429B-6733-4E0D-8297-E245CBB5CD57}
+		{280A54EA-F707-4683-9C9B-79035A5137AF} = {2AC143B2-2C2C-4FB4-9F37-743E503640BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACC22D90-C536-4A01-BFB8-1B3B5F39EE9A}
