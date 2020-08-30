@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\Alza.Domain\Alza.Domain.csproj" />
   </ItemGroup>
 
 </Project>
