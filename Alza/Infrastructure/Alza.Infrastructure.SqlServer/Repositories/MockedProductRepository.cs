@@ -307,10 +307,10 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                 new Entities.Product()
                 {
                     Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
+                    Name = "Soundpeats Truewings",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=SOUND001c",
+                    Price = 1690.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless za uši, uzavřená konstrukce, Bluetooth 5.0, podpora SBC, s ovládáním hlasitosti, přijímání hovorů, certifikace IPX7 - voděodolná a potuodolná, frekvenční rozsah 20 Hz-20000 Hz, citlivost 103 dB/mW, impedance 32 Ohm, měnič 13,6 mm, výdrž baterie až 22 h (4 h+18 h)"
                 },
                 new Entities.Product()
                 {
@@ -331,10 +331,146 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                 new Entities.Product()
                 {
                     Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
+                    Name = "Sennheiser HD 450BT Black",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM300a2a1",
+                    Price = 4390.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, Bluetooth 5.0, podpora AAC a aptX, aktivní potlačení hluku (ANC), s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, s vibracemi, frekvenční rozsah 18 Hz-22000 Hz, výdrž baterie až 30 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Sennheiser HD 25",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM123e",
+                    Price = 4059.00M,
+                    Description = "Sluchátka přes hlavu, na uši, uzavřená konstrukce, 3,5 mm Jack, 6,3 mm Jack, frekvenční rozsah 16 Hz-22000 Hz, citlivost 120 dB/mW, impedance 70 Ohm, odnímatelný kabel 1,5 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Sennheiser HD 569",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM158g",
+                    Price = 3990.00M,
+                    Description = "Sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, 6,3 mm Jack, frekvenční rozsah 10 Hz-28000 Hz, citlivost 115 dB/mW, impedance 23 Ohm, odnímatelný kabel 1,2 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Sennheiser CX 350BT černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM201g1",
+                    Price = 2590.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, špunty, uzavřená konstrukce, Bluetooth 5.0, podpora AAC, aptX a SBC, přijímání hovorů, přepínání skladeb, frekvenční rozsah 17 Hz-20000 Hz, impedance 28 Ohm, výdrž baterie až 10 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Pioneer SE-E9TW-P růžová",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=PIO633f44c",
+                    Price = 4190.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless špunty, uzavřená konstrukce, Bluetooth 5.0, přijímání hovorů, přepínání skladeb, hlasový asistent, frekvenční rozsah 20 Hz-20000 Hz, měnič 6 mm, výdrž baterie až 20 h (5 h+15 h)"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Pioneer SE-MS7BT-T hnědá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=PIO633g9g",
+                    Price = 3690.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth, NFC, frekvenční rozsah 9 Hz-40000 Hz, impedance 32 Ohm, měnič 40 mm"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Pioneer SE-S6BN-B černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=PIO633h2",
+                    Price = 3490.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, na uši, uzavřená konstrukce, Bluetooth 5.0, aktivní potlačení hluku (ANC), s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, frekvenční rozsah 20 Hz-22000 Hz, měnič 40 mm, odnímatelný kabel 1,2 m, výdrž baterie až 30 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Pioneer SE-MS5T-K černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=PIO633g9a",
+                    Price = 1390.00M,
+                    Description = "Sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, přijímání hovorů, frekvenční rozsah 9 Hz-40000 Hz, citlivost 96 dB/mW, impedance 32 Ohm, měnič 40 mm, odnímatelný kabel 1,2 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Pioneer SE-MJ503-K černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=PIO630m6",
+                    Price = 649.00M,
+                    Description = "Sluchátka přes hlavu, na uši, uzavřená konstrukce, 3,5 mm Jack, frekvenční rozsah 10 Hz-24000 Hz, citlivost 100 dB/mW, impedance 32 Ohm, měnič 30 mm, kabel 1,2 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Soundpeats Truengine SE",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=SOUND001a",
+                    Price = 1249.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless špunty, uzavřená konstrukce, Bluetooth 5.0, podpora aptX a SBC, s ovládáním hlasitosti, přijímání hovorů, certifikace IPX5, frekvenční rozsah 20 Hz-20000 Hz, citlivost 97 dB/mW, impedance 16 Ohm, výdrž baterie až 27 h (6 h+21 h)"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Acer Predator Gaming Headset Galea 350",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=NC472j9k",
+                    Price = 2199.00M,
+                    Description = "Herní sluchátka drátová, s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, USB-A, pro PC, s ovládáním hlasitosti, prostorový zvuk 7.1, frekvenční rozsah 20 Hz-20000 Hz, citlivost 116 dB/mW, impedance 32 Ohm, měnič 50 mm"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Acer Predator Gaming Headset Galea 311",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=NC472j9a",
+                    Price = 1669.00M,
+                    Description = "Herní sluchátka drátová, s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, pro PC, s ovládáním hlasitosti, frekvenční rozsah 20 Hz-20000 Hz, citlivost 115 dB/mW, impedance 32 Ohm, měnič 50 mm"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Acer Nitro Gaming Headset",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=NC472j8",
+                    Price = 699.00M,
+                    Description = "Herní sluchátka drátová, s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, pro PC, frekvenční rozsah 20 Hz-20000 Hz, citlivost 100 dB/mW, impedance 21 Ohm, měnič 50 mm, kabel 1,2 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "AfterShokz Aeropex černá",
+                    ImgUri = string.Empty,
+                    Price = 4290.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, na lícní kosti, uzavřená konstrukce, Bluetooth 5.0, aktivní potlačení hluku (ANC), přijímání hovorů, přepínání skladeb, certifikace IPX7 - voděodolná a potuodolná, frekvenční rozsah 20 Hz-20000 Hz, citlivost 105 dB/mW, výdrž baterie až 8 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "AfterShokz Trekz Air šedá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=AKZ120o41",
+                    Price = 3090.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, za uši, Bluetooth 4.2, přijímání hovorů, přepínání skladeb, certifikace IPX5, frekvenční rozsah 20 Hz-20000 Hz, citlivost 100 dB/mW, výdrž baterie až 6 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "AfterShokz Trekz Titanium šedá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=AKZ120k3",
+                    Price = 1990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, na lícní kosti, uzavřená konstrukce, Bluetooth 4.1, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, certifikace IPX5, frekvenční rozsah 20 Hz-20000 Hz, citlivost 100 dB/mW, výdrž baterie až 6 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "JVC HA-S90BN-Z ",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JVC274l",
+                    Price = 2339.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth, podpora SBC, NFC, aktivní potlačení hluku (ANC), frekvenční rozsah 8 Hz-25000 Hz, citlivost 100 dB/mW, měnič 40 mm, odnímatelný kabel 1,2 m, výdrž baterie až 27 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "JVC HA-S30BT R",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JVC274b",
+                    Price = 989.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, na uši, uzavřená konstrukce, Bluetooth, s ovládáním hlasitosti, frekvenční rozsah 20 Hz-20000 Hz, měnič 30 mm, výdrž baterie až 17 h"
                 }
             };
 
