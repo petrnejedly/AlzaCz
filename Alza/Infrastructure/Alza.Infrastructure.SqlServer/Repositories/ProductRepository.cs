@@ -180,5 +180,39 @@ namespace Alza.Infrastructure.SqlServer.Repositories
 
             return this.mapper.Map<IEnumerable<Domain.Entities.Product>>(products).ToList();
         }
+
+        /// <inheritdoc/>
+        public bool UpdateProduct(Domain.Entities.Product product)
+        {
+            bool returnSuccess = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand myCmd = connection.CreateCommand())
+                {
+                    myCmd.CommandType = CommandType.StoredProcedure;
+                    myCmd.CommandText = "[dbo].[Alza_Products_Update]";
+                    myCmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = product.Id;
+                    myCmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = product.Description;
+                    myCmd.Parameters.Add("@IdentityName", SqlDbType.NVarChar, 255).Value = "Web";
+                    myCmd.Parameters.Add("@IdentityIP", SqlDbType.NVarChar, 255).Value = "0.0.0.0";
+                    try
+                    {
+                        myCmd.Connection.Open();
+                        myCmd.ExecuteNonQuery();
+                        myCmd.Connection.Close();
+                        returnSuccess = true;
+                    }
+                    catch (Exception eX)
+                    {
+                        string declaringType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name;
+                        string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                        throw new Exception($"Error in {declaringType} / {methodName}.", eX);
+                    }
+                }
+            }
+
+            return returnSuccess;
+        }
     }
 }

@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Alza.Domain.Abstractions\Alza.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\Alza.Domain\Alza.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
