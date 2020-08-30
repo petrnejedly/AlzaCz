@@ -11,6 +11,8 @@ namespace Alza.Infrastructure.SqlServer.Repositories
     /// </summary>
     public class MockedProductRepository : IMockedProductRepository
     {
+        private const int DefaultPageSize = 10;
+
         private readonly IMapper mapper;
         private List<Entities.Product> mockedProducts;
 
@@ -41,16 +43,26 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public IList<Domain.Entities.Product> GetProducts(int page, int pageSize)
+        public IList<Domain.Entities.Product> GetProducts(int page, int? pageSize)
         {
             int pageIndex = page - 1;
             if (pageIndex < 0) { pageIndex = 0; }
+            int pageSizeNotNull = (int)((!pageSize.HasValue || pageSize == 0) ? pageSize : DefaultPageSize);
 
-            List<Entities.Product> products = this.mockedProducts.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+            List<Entities.Product> products = this.mockedProducts.Skip(pageIndex * pageSizeNotNull).Take(pageSizeNotNull).ToList();
 
             return this.mapper.Map<IEnumerable<Domain.Entities.Product>>(products).ToList();
         }
 
+        /// <inheritdoc/>
+        public bool UpdateProduct(Domain.Entities.Product product)
+        {
+            bool returnSuccess = true;
+            // Act like the mocked product description has actually been modified.
+            return returnSuccess;
+        }
+
+        #region private List<Entities.Product> GetMockedProducts()
         /// <summary>
         /// Gets a collection of the mocked products.
         /// </summary>
@@ -143,10 +155,154 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                 new Entities.Product()
                 {
                     Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
+                    Name = "JBL Club ONE",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JJ093aa3",
+                    Price = 9790.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, Bluetooth 5.0, aktivní potlačení hluku (ANC), s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, frekvenční rozsah 10 Hz-40000 Hz, měnič 40 mm, odnímatelný kabel 1,5 m, výdrž baterie až 45 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "JBL Under Armour Sport Wireless Train černo-červená",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JJ094c5",
+                    Price = 4990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, na uši, uzavřená konstrukce, 3,5 mm Jack, Bluetooth 4.1, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, certifikace IPX4, frekvenční rozsah 16 Hz-20000 Hz, citlivost 101 dB/mW, impedance 32 Ohm, měnič 40 mm, odnímatelný kabel 1,25 m, výdrž baterie až 16 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "JBL Under Armour True Wireless Flash černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JJ094c1",
+                    Price = 3390.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless špunty, uzavřená konstrukce, Bluetooth 4.2, přijímání hovorů, přepínání skladeb, certifikace IPX7 - voděodolná a potuodolná, frekvenční rozsah 20 Hz-20000 Hz, citlivost 113 dB/mW, impedance 14 Ohm, měnič 5,8 mm, výdrž baterie až 25 h (5 h+20 h)"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Beats Solo Pro Wireless - More Matte Collection - červená",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=MON380a1a6",
+                    Price = 6990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, na uši, uzavřená konstrukce, Bluetooth, aktivní potlačení hluku (ANC), přijímání hovorů, hlasový asistent, měnič 19,7 mm"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Beats Studio3 Wireless - matná černá",
+                    ImgUri = "https://cdn.alza.cz",
+                    Price = 6490.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, na uši, uzavřená konstrukce, Bluetooth 4.0, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, odnímatelný kabel 1,2 m, výdrž baterie až 40 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Beats PowerBeats Pro červená",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=MON303o81h",
+                    Price = 5990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless za uši, uzavřená konstrukce, Bluetooth, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, certifikace IPX4, výdrž baterie až 24 h (9 h+15 h)"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "BOSE Noise Cancelling Headphones 700 černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=BOS310k92",
+                    Price = 7990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth, aktivní potlačení hluku (ANC), přepínání skladeb, hlasový asistent, odnímatelný kabel 1,06 m, výdrž baterie až 20 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "BOSE QuietComfort 35 II černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=BOS310k9bc",
+                    Price = 6289.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, Bluetooth 4.1, NFC, aktivní potlačení hluku (ANC), s ovládáním hlasitosti, přijímání hovorů, hlasový asistent, odnímatelný kabel 1,2 m, výdrž baterie až 20 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "BOSE SoundLink AE wireless II - černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=BOS311r1",
+                    Price = 5990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth 4.0, NFC, s ovládáním hlasitosti, výdrž baterie až 15 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "BOSE SoundSport Free Wireless oranžová",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=BOS312g1b",
+                    Price = 3990.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless špunty, uzavřená konstrukce, Bluetooth, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, certifikace IPX4, výdrž baterie až 15 h (5 h+10 h)"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Koss BT/740iQZ černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JK983y2b",
+                    Price = 3999.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth 5.0, podpora AAC a aptX, aktivní potlačení hluku (ANC), přijímání hovorů"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Koss TWS/150i černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JK997n1b",
+                    Price = 1999.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless pecky, uzavřená konstrukce, Bluetooth 5.0, přijímání hovorů"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Koss KSC/35 Wireless černá",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JK997n1a",
+                    Price = 1899.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, na uši, uzavřená konstrukce, Bluetooth 4.2, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, frekvenční rozsah 15 Hz-25000 Hz, citlivost 101 dB/mW, výdrž baterie až 6 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Koss GMR/545 AIR (dožitvotní záruka)",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JK616a",
+                    Price = 1799.00M,
+                    Description = "Herní sluchátka drátová, s mikrofonem, přes hlavu, okolo uší, otevřená konstrukce, 3,5 mm Jack, pro PC, s ovládáním hlasitosti, frekvenční rozsah 15 Hz-22000 Hz, citlivost 102 dB/mW, impedance 35 Ohm, odnímatelný kabel 3,6 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Koss BT/539i černá (24 měsíců záruka)",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JK983y2",
+                    Price = 1499.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, frekvenční rozsah 10 Hz-20000 Hz, citlivost 97 dB/mW, impedance 38 Ohm"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Koss PORTA PRO MIC (doživotní záruka)",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JK618set",
+                    Price = 1490.00M,
+                    Description = "Sluchátka s mikrofonem, přes hlavu, na uši, otevřená konstrukce, 3,5 mm Jack, s ovládáním hlasitosti, frekvenční rozsah 15 Hz-25000 Hz, citlivost 101 dB/mW, impedance 60 Ohm, kabel 1,22 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Sennheiser HD 660S",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM162d1",
+                    Price = 10590.00M,
+                    Description = "Sluchátka přes hlavu, okolo uší, otevřená konstrukce, 3,5 mm Jack, 6,3 mm Jack, frekvenční rozsah 10 Hz-40000 Hz, citlivost 104 dB/mW, impedance 150 Ohm, odnímatelný kabel 3 m"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Sennheiser RS 195 U",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM171m",
+                    Price = 9590.00M,
+                    Description = "Bezdrátová sluchátka přes hlavu, okolo uší, uzavřená konstrukce, 3,5 mm Jack, 6,3 mm Jack, radiofrekvenční připojení, s ovládáním hlasitosti, frekvenční rozsah 17 Hz-22000 Hz, citlivost 117 dB/mW, výdrž baterie až 18 h"
+                },
+                new Entities.Product()
+                {
+                    Id = i++,
+                    Name = "Sennheiser GSP 670",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM196q",
+                    Price = 8790.00M,
+                    Description = "Herní sluchátka bezdrátová, s mikrofonem, přes hlavu, okolo uší, uzavřená konstrukce, Bluetooth s donglem, aktivní potlačení hluku (ANC), prostorový zvuk 7.1, přijímání hovorů, frekvenční rozsah 10 Hz-23000 Hz, výdrž baterie až 20 h"
                 },
                 new Entities.Product()
                 {
@@ -159,50 +315,18 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                 new Entities.Product()
                 {
                     Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
+                    Name = "Sennheiser MOMENTUM True Wireless",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM166t1",
+                    Price = 6290.00M,
+                    Description = "Bezdrátová sluchátka s mikrofonem, True Wireless špunty, uzavřená konstrukce, Bluetooth 5.0, podpora AAC a aptX, s ovládáním hlasitosti, přijímání hovorů, přepínání skladeb, hlasový asistent, certifikace IPX4, frekvenční rozsah 5 Hz-21000 Hz, citlivost 107 dB/mW, měnič 7 mm, výdrž baterie až 16 h (4 h+12 h)"
                 },
                 new Entities.Product()
                 {
                     Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
-                },
-                new Entities.Product()
-                {
-                    Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
-                },
-                new Entities.Product()
-                {
-                    Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
-                },
-                new Entities.Product()
-                {
-                    Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
-                },
-                new Entities.Product()
-                {
-                    Id = i++,
-                    Name = "xxx",
-                    ImgUri = "",
-                    Price = 0.00M,
-                    Description = ""
+                    Name = "Sennheiser HD 25 PLUS",
+                    ImgUri = "/ImgW.ashx?fd=f3&cd=JM123g",
+                    Price = 4899.00M,
+                    Description = "Sluchátka přes hlavu, na uši, uzavřená konstrukce, 3,5 mm Jack, 6,3 mm Jack, frekvenční rozsah 16 Hz-22000 Hz, citlivost 120 dB/mW, impedance 70 Ohm, odnímatelný kabel 3 m"
                 },
                 new Entities.Product()
                 {
@@ -216,5 +340,6 @@ namespace Alza.Infrastructure.SqlServer.Repositories
 
             return products;
         }
+        #endregion
     }
 }

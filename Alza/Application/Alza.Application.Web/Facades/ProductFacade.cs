@@ -51,7 +51,7 @@ namespace Alza.Application.Web.Facades
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        public IList<Product> GetProducts(int page, int pageSize)
+        public IList<Product> GetProducts(int page, int? pageSize)
         {
             return this.productService.GetProducts(page, pageSize, UseMockData);
         }

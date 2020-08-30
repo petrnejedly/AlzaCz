@@ -4,5 +4,57 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div class="text-left">
+    <h3>Using mock data?</h3>
+    <ul>
+        <li>@ViewData["UseMockData"]</li>
+        <li>This setting can be changed in <b>appsettings.json</b></li>
+    </ul>
+
+    <p>&nbsp;</p>
+
+    <div class="alert alert-secondary" role="alert">
+        This is a list of currently exposed API endpoints which can be requested using HTTP Get.
+    </div>
+
+    <h3>Get a single product by it's ID</h3>
+    <ul>
+        <li><a href="/api/product/get/1">/api/product/get/1</a></li>
+        <li><a href="/api/v1/product/get/1">/api/v1/product/get/1</a></li>
+        <li><a href="/api/v2/product/get/1">/api/v2/product/get/1</a></li>
+    </ul>
+
+    <h3>Get a full list of all available products.</h3>
+    <ul>
+        <li><a href="/api/product/get">/api/product/get</a></li>
+        <li><a href="/api/v1/product/get">/api/v1/product/get</a></li>
+    </ul>
+
+    <h3>Get a paged list of available products.</h3>
+    <ul>
+        <li><a href="/api/v2/product/get/1/10">/api/v2/product/get/1/10</a></li>
+    </ul>
+
+    <p>&nbsp;</p>
+
+    <div class="alert alert-secondary" role="alert">
+        This is a list of currently exposed API endpoints which can be requested using HTTP Put (by Swagger, Postman, etc.).
+    </div>
+
+    <h3>Update the product's description</h3>
+    <ul>
+        <li>/api/product/update (HttpPut)</li>
+    </ul>
+
+    <p>&nbsp;</p>
+
+    <div class="alert alert-secondary" role="alert">
+        Swagger API documentation
+    </div>
+
+    <h3>Swagger</h3>
+    <ul>
+        <li><a href="/swagger">Swagger UI</a></li>
+    </ul>
 </div>

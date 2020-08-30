@@ -14,6 +14,8 @@ namespace Alza.Infrastructure.SqlServer.Repositories
     /// </summary>
     public class ProductRepository : IProductRepository
     {
+        private const int DefaultPageSize = 10;
+
         private static string ConnectionString = string.Empty;
         private readonly IConfiguration configuration;
         private readonly IMapper mapper;
@@ -119,13 +121,13 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public IList<Domain.Entities.Product> GetProducts(int page, int pageSize)
+        public IList<Domain.Entities.Product> GetProducts(int page, int? pageSize)
         {
             List<Entities.Product> products = new List<Entities.Product>();
 
-            int total = 0;
             int pageIndex = page - 1;
             if (pageIndex < 0) { pageIndex = 0; }
+            if (!pageSize.HasValue || pageSize == 0) { pageSize = DefaultPageSize; }
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -149,7 +151,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                                   [PagesCount]
                                 */
                                 sqlReader.Read();
-                                total = sqlReader.IsDBNull(0) ? 0 : sqlReader.GetInt32(0);
+                                int total = sqlReader.IsDBNull(0) ? 0 : sqlReader.GetInt32(0);
                             }
                             sqlReader.NextResult();
                             if (sqlReader.HasRows)

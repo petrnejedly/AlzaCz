@@ -51,20 +51,21 @@ namespace Alza.Domain.Services
         /// <param name="pageSize">Current page size.</param>
         /// <param name="useMockedData">Use mocked data instead of database data.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        public IList<Product> GetProducts(int page, int pageSize, bool useMockedData = false)
+        public IList<Product> GetProducts(int page, int? pageSize, bool useMockedData = false)
         {
             return (useMockedData) ? this.mockedProductRepository.GetProducts(page, pageSize) : this.productRepository.GetProducts(page, pageSize);
         }
 
         /// <summary>
         /// Updates the product (product description).
+        /// Only live mode (UseMockData: false) is supported.
         /// </summary>
         /// <param name="product">The product to be updated.</param>
         /// <param name="useMockedData">Update mocked data instead of database data.</param>
         /// <returns>Returns a value indicating whether the product was successfully updated or not.</returns>
         public bool UpdateProduct(Product product, bool useMockedData = false)
         {
-            return (useMockedData) ? false : this.productRepository.UpdateProduct(product);
+            return (useMockedData) ? this.mockedProductRepository.UpdateProduct(product) : this.productRepository.UpdateProduct(product);
         }
     }
 }

@@ -27,6 +27,13 @@ namespace Alza.Domain.Abstractions.Repositories
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
         /// <returns>Returns a collection of the <see cref="Product"/> items, paged.</returns>
-        IList<Product> GetProducts(int page, int pageSize);
+        IList<Product> GetProducts(int page, int? pageSize);
+
+        /// <summary>
+        /// Updates the mocked product (mocked product description).
+        /// </summary>
+        /// <param name="product">The mocked product to be updated.</param>
+        /// <returns>Returns a value indicating whether the mocked product was successfully updated or not.</returns>
+        public bool UpdateProduct(Product product);
     }
 }

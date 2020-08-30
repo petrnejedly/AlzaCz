@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>bf85ec6f-e47d-47f0-a34b-26f4db52882f</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Projects\AlzaCz\Alza\Presentation\Alza.Web\Alza.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +20,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Alza.Application.Web\Alza.Application.Web.csproj" />
+    <ProjectReference Include="..\..\Domain\Alza.Domain\Alza.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Alza.Infrastructure.SqlServer\Alza.Infrastructure.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>

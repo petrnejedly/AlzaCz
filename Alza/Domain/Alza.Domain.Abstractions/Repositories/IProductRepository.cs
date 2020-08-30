@@ -27,7 +27,7 @@ namespace Alza.Domain.Abstractions.Repositories
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        IList<Product> GetProducts(int page, int pageSize);
+        IList<Product> GetProducts(int page, int? pageSize);
 
         /// <summary>
         /// Updates the product (product description).

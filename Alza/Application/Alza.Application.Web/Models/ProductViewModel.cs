@@ -17,12 +17,14 @@ namespace Alza.Application.Web.Models
         /// Gets or sets the product name.
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Product name is required.")]
+        [StringLength(200, ErrorMessage = "Product name can't be longer than 200 characters")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the product image uri.
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Product image uri is required.")]
+        [StringLength(200, ErrorMessage = "Product image uri can't be longer than 200 characters")]
         public string ImgUri { get; set; }
 
         /// <summary>

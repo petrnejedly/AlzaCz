@@ -6,28 +6,54 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Alza.Web.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Alza.Web.Controllers
 {
+    /// <summary>
+    /// Home controller class.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="configuration">The configuration.</param>
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
-            _logger = logger;
+            this._logger = logger;
+            this.configuration = configuration;
         }
 
+        /// <summary>
+        /// An index action.
+        /// </summary>
+        /// <returns>Returns a view.</returns>
         public IActionResult Index()
         {
+            bool.TryParse(this.configuration["UseMockData"], out bool useMockData);
+            ViewData.Add("UseMockData", (useMockData) ? "Yes, currently using mock data." : "No, currently using live data.");
+
             return View();
         }
 
+        /// <summary>
+        /// A privacy action.
+        /// </summary>
+        /// <returns>Returns a view.</returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        /// <summary>
+        /// An error action.
+        /// </summary>
+        /// <returns>Returns a view.</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

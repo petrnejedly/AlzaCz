@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Alza.Web</name>
+    </assembly>
+    <members>
+        <member name="T:Alza.Web.Controllers.HomeController">
+            <summary>
+            Home controller class.
+            </summary>
+        </member>
+        <member name="M:Alza.Web.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{Alza.Web.Controllers.HomeController},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Alza.Web.Controllers.ProductController"/> class.
+            </summary>
+            <param name="logger">The logger.</param>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:Alza.Web.Controllers.HomeController.Index">
+            <summary>
+            An index action.
+            </summary>
+            <returns>Returns a view.</returns>
+        </member>
+        <member name="M:Alza.Web.Controllers.HomeController.Privacy">
+            <summary>
+            A privacy action.
+            </summary>
+            <returns>Returns a view.</returns>
+        </member>
+        <member name="M:Alza.Web.Controllers.HomeController.Error">
+            <summary>
+            An error action.
+            </summary>
+            <returns>Returns a view.</returns>
+        </member>
+        <member name="T:Alza.Web.Controllers.ProductController">
+            <summary>
+            Product Web API controller class.
+            </summary>
+        </member>
+        <member name="M:Alza.Web.Controllers.ProductController.#ctor(Alza.Application.Web.Facades.ProductFacade,Microsoft.Extensions.Configuration.IConfiguration,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Alza.Web.Controllers.ProductController"/> class.
+            </summary>
+            <param name="productFacade">An instance of the Product facade.</param>
+            <param name="configuration">The configuration.</param>
+            <param name="mapper">An instance of the Automapper class.</param>
+        </member>
+        <member name="M:Alza.Web.Controllers.ProductController.Get(System.Int32)">
+            <summary>
+            Gets a single product by it's id.
+            </summary>
+            <param name="id">Product id.</param>
+            <returns>Returns a single instance of the <see cref="T:Alza.Domain.Entities.Product"/> item.</returns>
+        </member>
+        <member name="M:Alza.Web.Controllers.ProductController.Get">
+            <summary>
+            Gets a collection of all products.
+            </summary>
+            <returns>Returns a collection of the <see cref="T:Alza.Application.Web.Models.ProductViewModel"/> items.</returns>
+        </member>
+        <member name="M:Alza.Web.Controllers.ProductController.Get(System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Gets a collection of all products.
+            </summary>
+            <returns>Returns a collection of the <see cref="T:Alza.Application.Web.Models.ProductViewModel"/> items.</returns>
+        </member>
+        <member name="M:Alza.Web.Controllers.ProductController.Update(Alza.Application.Web.Models.ProductUpdateRequest)">
+            <summary>
+            Updates the product (product description).
+            </summary>
+            <param name="productUpdateRequest">An instance of the <see cref="T:Alza.Application.Web.Models.ProductUpdateRequest" />.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Alza.Web.Models.ErrorViewModel">
+            <summary>
+            An Error view model class.
+            </summary>
+        </member>
+        <member name="P:Alza.Web.Models.ErrorViewModel.RequestId">
+            <summary>
+            Gets or sets the RequestId.
+            </summary>
+        </member>
+        <member name="P:Alza.Web.Models.ErrorViewModel.ShowRequestId">
+            <summary>
+            Gets a value indicating whether to show the RequestId, based on whether the RequestId value is or is not null or empty.
+            </summary>
+        </member>
+        <member name="T:Alza.Web.Program">
+            <summary>
+            Program class.
+            </summary>
+        </member>
+        <member name="M:Alza.Web.Program.Main(System.String[])">
+            <summary>
+            Main method.
+            </summary>
+            <param name="args">An array of input arguments.</param>
+        </member>
+        <member name="M:Alza.Web.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Creates the Host builder.
+            </summary>
+            <param name="args">An array of input arguments.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Alza.Web.Startup">
+            <summary>
+            Startup class.
+            </summary>
+        </member>
+        <member name="M:Alza.Web.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Alza.Web.Startup"/> (v1) class.
+            </summary>
+            <param name="configuration">An instance of the application configuration properties.</param>
+        </member>
+        <member name="P:Alza.Web.Startup.Configuration">
+            <summary>
+            Gets the application configuration properties.
+            </summary>
+        </member>
+        <member name="M:Alza.Web.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">A collection of service descriptors.</param>
+        </member>
+        <member name="M:Alza.Web.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">Defines a class that provides the mechanism to configure an application's request pipeline.</param>
+            <param name="env">Provides information about the web hosting environment an application is running in.</param>
+        </member>
+    </members>
+</doc>
