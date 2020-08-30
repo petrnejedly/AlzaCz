@@ -5,14 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Facades\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="MappingProfiles\" />
-    <Folder Include="Models\" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
+    <ProjectReference Include="..\..\Domain\Alza.Domain.Services\Alza.Domain.Services.csproj" />
+    <ProjectReference Include="..\..\Domain\Alza.Domain\Alza.Domain.csproj" />
   </ItemGroup>
 
 </Project>
