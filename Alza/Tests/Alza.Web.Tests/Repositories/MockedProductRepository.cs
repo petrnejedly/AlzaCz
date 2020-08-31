@@ -1,54 +1,55 @@
-﻿using System.Collections.Generic;
-using Alza.Application.Web.Facades;
-using Alza.Domain.Abstractions.Repositories;
+﻿using Alza.Domain.Abstractions.Repositories;
 using Alza.Domain.Entities;
-using Alza.Domain.Services;
-using Alza.Web.Controllers;
-using Alza.Web.Tests.Repositories;
 using AutoMapper;
-using AutoMapper.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Xunit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Alza.Web.Tests.Controllers
+namespace Alza.Web.Tests.Repositories
 {
-    public class ProductsControllerTest
+    public class MockedProductRepository : IProductRepository
     {
-        [Fact]
-        public async System.Threading.Tasks.Task Get_When_FoundAsync()
+        private readonly IMapper mapper;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MockedProductRepository"/> class.
+        /// </summary>
+        /// <param name="mapper"></param>
+        public MockedProductRepository(IMapper mapper)
         {
-            ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            IConfigurationRoot configurationRoot = configurationBuilder.Build();
-
-            MapperConfiguration mapperConfiguration = new MapperConfiguration(new MapperConfigurationExpression());
-            Mapper mapper = new Mapper(mapperConfiguration);
-
-            Mock mockLogger = new Mock<ILogger<ProductsController>>();
-            ILogger<ProductsController> logger = (ILogger<ProductsController>)mockLogger.Object;
-
-            //MockedProductRepository mockedProductRepository = new MockedProductRepository(mapper);
-
-            Mock mockProductRepository = new Mock<IProductRepository>();
-            //mockProductRepository.Setup(x => x.GetProduct(1)).Returns(() => new Product() { Description = "ssdfsdf" });
-
-            IProductRepository productRepository = (IProductRepository)mockProductRepository.Object;
-            ProductService productService = new ProductService(productRepository);
-            ProductFacade productFacade = new ProductFacade(productService);
-            ProductsController productsController = new ProductsController(productFacade, configurationRoot, mapper, logger);
-
-            IActionResult result = await productsController.Get(1).ConfigureAwait(false);
-            Assert.IsType<OkObjectResult>(result);
+            this.mapper = mapper;
         }
 
+        /// <inheritdoc/>
+        public async Task<Product> GetProductAsync(int id)
+        {
+            //Product product = await this.mockedProducts.Where(p => p.Id == id).FirstOrDefault();
+            //return this.mapper.Map<Product>(product);
 
+            throw new NotImplementedException();
+        }
 
+        /// <inheritdoc/>
+        public async Task<IList<Product>> GetProductsAsync()
+        {
+            throw new NotImplementedException();
+        }
 
+        /// <inheritdoc/>
+        public async Task<IList<Product>> GetProductsAsync(int page, int? pageSize)
+        {
+            throw new NotImplementedException();
+        }
 
-        #region private List<Product> mockedProducts = new List<Product>()
-        private List<Product> mockedProducts = new List<Product>()
+        /// <inheritdoc/>
+        public async Task<bool> UpdateProductDescriptionAsync(int id, string description)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region private readonly List<Product> mockedProducts = new List<Product>()
+        private readonly List<Product> mockedProducts = new List<Product>()
         {
             new Product()
             {
