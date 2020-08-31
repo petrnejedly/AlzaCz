@@ -14,13 +14,13 @@ namespace Alza.Domain.Abstractions.Repositories
         /// </summary>
         /// <param name="id">Product id.</param>
         /// <returns></returns>
-        Task<Product> GetProduct(int id);
+        Task<Product> GetProductAsync(int id);
 
         /// <summary>
         /// Gets a collection of all Products.
         /// </summary>
         /// <returns>Returns a collection of the <see cref="Product"/> items.</returns>
-        Task<IList<Product>> GetProducts();
+        Task<IList<Product>> GetProductsAsync();
 
         /// <summary>
         /// Gets a paged collection of Products.
@@ -28,7 +28,7 @@ namespace Alza.Domain.Abstractions.Repositories
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        Task<IList<Product>> GetProducts(int page, int? pageSize);
+        Task<IList<Product>> GetProductsAsync(int page, int? pageSize);
 
         /// <summary>
         /// Updates a description of the product specified by it's id.
@@ -36,6 +36,6 @@ namespace Alza.Domain.Abstractions.Repositories
         /// <param name="id">The product identifier.</param>
         /// <param name="description">The product description.</param>
         /// <returns>Returns a value indicating whether the product description was successfully updated or not.</returns>
-        public Task<bool> UpdateProductDescription(int id, string description);
+        public Task<bool> UpdateProductDescriptionAsync(int id, string description);
     }
 }

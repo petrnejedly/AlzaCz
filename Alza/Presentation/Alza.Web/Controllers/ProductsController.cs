@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Alza.Web.Controllers
 {
@@ -53,19 +54,22 @@ namespace Alza.Web.Controllers
         [HttpGet("{id}")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("2.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a single product by it's id (v1 and v2).", Type = typeof(IActionResult))]
         public async Task<IActionResult> Get(int id)
         {
             if (id < 1)
             {
-                return this.BadRequest("The product id must be greater than zero.");
+                return this.BadRequest(new ApiResponseViewModel() { Message = "The product id must be greater than zero." });
             }
 
             Product product = new Product();
 
             try
             {
-                product = await this.productFacade.GetProduct(id);
+                product = await this.productFacade.GetProductAsync(id);
             }
             catch (Exception eX)
             {
@@ -74,7 +78,7 @@ namespace Alza.Web.Controllers
 
             if (product == null || product.Id == 0)
             {
-                return this.NotFound();
+                return this.NotFound(new ApiResponseViewModel() { Message = $"The product with id {id} was not found." });
             }
 
             ProductViewModel productViewModel = this.mapper.Map<ProductViewModel>(product, opts =>
@@ -92,6 +96,7 @@ namespace Alza.Web.Controllers
         /// <returns>Returns a collection of the <see cref="ProductViewModel"/> items.</returns>
         [HttpGet]
         [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a collection of all products (v1).", Type = typeof(IActionResult))]
         public async Task<IActionResult> Get()
         {
@@ -99,18 +104,18 @@ namespace Alza.Web.Controllers
 
             try
             {
-                products = await this.productFacade.GetProducts();
+                products = await this.productFacade.GetProductsAsync();
             }
             catch (Exception eX)
             {
                 this.logger.LogError(eX.Message, eX);
             }
 
-            IList<ProductViewModel> productViewModels = (products != null && products.Any()) ? this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
+            IList<ProductViewModel> productViewModels = this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
             {
                 opts.Items["ImageUrlPrefix"] = configuration["ImageUrlPrefix"];
                 opts.Items["ImageNull"] = configuration["ImageNull"];
-            }).ToList() : new List<ProductViewModel>();
+            }).ToList();
 
             return this.Ok(productViewModels.ToArray());
         }
@@ -121,6 +126,7 @@ namespace Alza.Web.Controllers
         /// <returns>Returns a collection of the <see cref="ProductViewModel"/> items.</returns>
         [HttpGet("{page}/{pageSize}")]
         [MapToApiVersion("2.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a paged collection of products (v2).", Type = typeof(IActionResult))]
         public async Task<IActionResult> Get([FromRoute] int page, [FromRoute] int? pageSize)
         {
@@ -128,18 +134,18 @@ namespace Alza.Web.Controllers
 
             try
             {
-                products = await this.productFacade.GetProducts(page, pageSize);
+                products = await this.productFacade.GetProductsAsync(page, pageSize);
             }
             catch (Exception eX)
             {
                 this.logger.LogError(eX.Message, eX);
             }
 
-            IList<ProductViewModel> productViewModels = (products != null && products.Any()) ? this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
+            IList<ProductViewModel> productViewModels = this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
             {
                 opts.Items["ImageUrlPrefix"] = configuration["ImageUrlPrefix"];
                 opts.Items["ImageNull"] = configuration["ImageNull"];
-            }).ToList() : new List<ProductViewModel>();
+            }).ToList();
 
             return this.Ok(productViewModels.ToArray());
         }
@@ -153,19 +159,21 @@ namespace Alza.Web.Controllers
         [HttpPatch("{id}")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("2.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Updates the product (product description).", Type = typeof(IActionResult))]
         public async Task<IActionResult> Get([FromRoute] int id, [FromBody]string description)
         {
-            if (id == 0)
+            if (id < 1)
             {
-                return this.BadRequest("The product id must not equal to zero.");
+                return this.BadRequest(new ApiResponseViewModel() { Message = "The product id must be greater than zero." });
             }
 
             bool returnSucces = false;
 
             try
             {
-                returnSucces = await this.productFacade.UpdateProductDescription(id, description);
+                returnSucces = await this.productFacade.UpdateProductDescriptionAsync(id, description);
             }
             catch (Exception eX)
             {
@@ -174,10 +182,10 @@ namespace Alza.Web.Controllers
 
             if (!returnSucces)
             {
-                return this.Problem(title: "Description not updated", detail: "The product description was not updated.");
+                return this.Problem(title: "Description not updated", detail: "The description has not been updated.");
             }
 
-            return this.Ok($"The description has been successfully updated.");
+            return this.Ok(new ApiResponseViewModel() { Message = $"The description has been successfully updated." });
         }
     }
 }

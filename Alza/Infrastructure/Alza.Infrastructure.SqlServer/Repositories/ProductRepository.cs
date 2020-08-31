@@ -34,7 +34,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<Domain.Entities.Product> GetProduct(int id)
+        public async Task<Domain.Entities.Product> GetProductAsync(int id)
         {
             Entities.Product product = new Entities.Product();
 
@@ -77,7 +77,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IList<Domain.Entities.Product>> GetProducts()
+        public async Task<IList<Domain.Entities.Product>> GetProductsAsync()
         {
             List<Entities.Product> products = new List<Entities.Product>();
 
@@ -122,7 +122,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IList<Domain.Entities.Product>> GetProducts(int page, int? pageSize)
+        public async Task<IList<Domain.Entities.Product>> GetProductsAsync(int page, int? pageSize)
         {
             List<Entities.Product> products = new List<Entities.Product>();
 
@@ -185,7 +185,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<bool> UpdateProductDescription(int id, string description)
+        public async Task<bool> UpdateProductDescriptionAsync(int id, string description)
         {
             bool returnSuccess = false;
 

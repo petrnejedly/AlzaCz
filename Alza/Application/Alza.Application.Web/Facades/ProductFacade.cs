@@ -26,18 +26,18 @@ namespace Alza.Application.Web.Facades
         /// </summary>
         /// <param name="id">Product id.</param>
         /// <returns>Returns a single instance of the <see cref="Product"/> item.</returns>
-        public async Task<Product> GetProduct(int id)
+        public async Task<Product> GetProductAsync(int id)
         {
-            return await this.productService.GetProduct(id);
+            return await this.productService.GetProductAsync(id);
         }
 
         /// <summary>
         /// Gets a collection of all Products.
         /// </summary>
         /// <returns>Returns a collection of the <see cref="Product"/> items.</returns>
-        public async Task<IList<Product>> GetProducts()
+        public async Task<IList<Product>> GetProductsAsync()
         {
-            return await this.productService.GetProducts();
+            return await this.productService.GetProductsAsync();
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Alza.Application.Web.Facades
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        public async Task<IList<Product>> GetProducts(int page, int? pageSize)
+        public async Task<IList<Product>> GetProductsAsync(int page, int? pageSize)
         {
-            return await this.productService.GetProducts(page, pageSize);
+            return await this.productService.GetProductsAsync(page, pageSize);
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Alza.Application.Web.Facades
         /// <param name="id">The product identifier.</param>
         /// <param name="description">The product description.</param>
         /// <returns>Returns a value indicating whether the product description was successfully updated or not.</returns>
-        public async Task<bool> UpdateProductDescription(int id, string description)
+        public async Task<bool> UpdateProductDescriptionAsync(int id, string description)
         {
-            return await this.productService.UpdateProductDescription(id, description);
+            return await this.productService.UpdateProductDescriptionAsync(id, description);
         }
     }
 }

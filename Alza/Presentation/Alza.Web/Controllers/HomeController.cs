@@ -35,8 +35,7 @@ namespace Alza.Web.Controllers
         /// <returns>Returns a view.</returns>
         public IActionResult Index()
         {
-            bool.TryParse(this.configuration["UseMockData"], out bool useMockData);
-            ViewData.Add("UseMockData", (useMockData) ? "Yes, currently using mock data." : "No, currently using live data.");
+            ViewData.Add("BaseUrl", string.Format("{0}://{1}", this.Request.Scheme, this.Request.Host));
 
             return View();
         }

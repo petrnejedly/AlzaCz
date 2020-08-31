@@ -12,20 +12,20 @@
 
     <h3>Get a single product by it's ID</h3>
     <ul>
-        <li><a href="/api/products/get/1">/api/products/get/1</a></li>
-        <li><a href="/api/v1/products/get/1">/api/v1/products/get/1</a></li>
-        <li><a href="/api/v2/products/get/1">/api/v2/products/get/1</a></li>
+        <li><a href="@ViewData["BaseUrl"]/api/products/get/1">@ViewData["BaseUrl"]<b>/api/products/get/1</b></a></li>
+        <li><a href="@ViewData["BaseUrl"]/api/v1/products/get/1">@ViewData["BaseUrl"]<b>/api/v1/products/get/1</b></a></li>
+        <li><a href="@ViewData["BaseUrl"]/api/v2/products/get/1">@ViewData["BaseUrl"]<b>/api/v2/products/get/1</b></a></li>
     </ul>
 
     <h3>Get a full list of all available products.</h3>
     <ul>
-        <li><a href="/api/products/get">/api/products/get</a></li>
-        <li><a href="/api/v1/products/get">/api/v1/products/get</a></li>
+        <li><a href="@ViewData["BaseUrl"]/api/products/get">@ViewData["BaseUrl"]<b>/api/products/get</b></a></li>
+        <li><a href="@ViewData["BaseUrl"]/api/v1/products/get">@ViewData["BaseUrl"]<b>/api/v1/products/get</b></a></li>
     </ul>
 
     <h3>Get a paged list of available products.</h3>
     <ul>
-        <li><a href="/api/v2/products/get/1/10">/api/v2/products/get/1/10</a></li>
+        <li><a href="@ViewData["BaseUrl"]/api/v2/products/get/1/10">@ViewData["BaseUrl"]<b>/api/v2/products/get/1/10</b></a></li>
     </ul>
 
     <p>&nbsp;</p>
@@ -47,6 +47,6 @@
 
     <h3>Swagger</h3>
     <ul>
-        <li><a href="/swagger">Swagger UI</a></li>
+        <li><a href="@ViewData["BaseUrl"]/swagger">Swagger UI</a></li>
     </ul>
 </div>
