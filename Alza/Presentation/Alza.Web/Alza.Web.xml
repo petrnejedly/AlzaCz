@@ -11,7 +11,7 @@
         </member>
         <member name="M:Alza.Web.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{Alza.Web.Controllers.HomeController},Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Initializes a new instance of the <see cref="T:Alza.Web.Controllers.ProductController"/> class.
+            Initializes a new instance of the <see cref="T:Alza.Web.Controllers.ProductsController"/> class.
             </summary>
             <param name="logger">The logger.</param>
             <param name="configuration">The configuration.</param>
@@ -34,43 +34,45 @@
             </summary>
             <returns>Returns a view.</returns>
         </member>
-        <member name="T:Alza.Web.Controllers.ProductController">
+        <member name="T:Alza.Web.Controllers.ProductsController">
             <summary>
             Product Web API controller class.
             </summary>
         </member>
-        <member name="M:Alza.Web.Controllers.ProductController.#ctor(Alza.Application.Web.Facades.ProductFacade,Microsoft.Extensions.Configuration.IConfiguration,AutoMapper.IMapper)">
+        <member name="M:Alza.Web.Controllers.ProductsController.#ctor(Alza.Application.Web.Facades.ProductFacade,Microsoft.Extensions.Configuration.IConfiguration,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{Alza.Web.Controllers.ProductsController})">
             <summary>
-            Initializes a new instance of the <see cref="T:Alza.Web.Controllers.ProductController"/> class.
+            Initializes a new instance of the <see cref="T:Alza.Web.Controllers.ProductsController"/> class.
             </summary>
             <param name="productFacade">An instance of the Product facade.</param>
             <param name="configuration">The configuration.</param>
             <param name="mapper">An instance of the Automapper class.</param>
+            <param name="logger">The logger.</param>
         </member>
-        <member name="M:Alza.Web.Controllers.ProductController.Get(System.Int32)">
+        <member name="M:Alza.Web.Controllers.ProductsController.Get(System.Int32)">
             <summary>
             Gets a single product by it's id.
             </summary>
             <param name="id">Product id.</param>
-            <returns>Returns a single instance of the <see cref="T:Alza.Domain.Entities.Product"/> item.</returns>
+            <returns>Returns a single instance of the <see cref="T:Alza.Application.Web.Models.ProductViewModel"/> item.</returns>
         </member>
-        <member name="M:Alza.Web.Controllers.ProductController.Get">
+        <member name="M:Alza.Web.Controllers.ProductsController.Get">
             <summary>
-            Gets a collection of all products.
+            Gets a collection of all Products.
             </summary>
             <returns>Returns a collection of the <see cref="T:Alza.Application.Web.Models.ProductViewModel"/> items.</returns>
         </member>
-        <member name="M:Alza.Web.Controllers.ProductController.Get(System.Int32,System.Nullable{System.Int32})">
+        <member name="M:Alza.Web.Controllers.ProductsController.Get(System.Int32,System.Nullable{System.Int32})">
             <summary>
-            Gets a collection of all products.
+            Gets a paged collection of Products.
             </summary>
             <returns>Returns a collection of the <see cref="T:Alza.Application.Web.Models.ProductViewModel"/> items.</returns>
         </member>
-        <member name="M:Alza.Web.Controllers.ProductController.Update(Alza.Application.Web.Models.ProductUpdateRequest)">
+        <member name="M:Alza.Web.Controllers.ProductsController.Get(System.Int32,System.String)">
             <summary>
-            Updates the product (product description).
+            Updates a description of the product specified by it's id.
             </summary>
-            <param name="productUpdateRequest">An instance of the <see cref="T:Alza.Application.Web.Models.ProductUpdateRequest" />.</param>
+            <param name="id">The product identifier.</param>
+            <param name="description">The product description.</param>
             <returns></returns>
         </member>
         <member name="T:Alza.Web.Models.ErrorViewModel">

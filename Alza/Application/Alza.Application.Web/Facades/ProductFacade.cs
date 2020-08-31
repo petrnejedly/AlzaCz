@@ -1,7 +1,7 @@
 ﻿using Alza.Domain.Entities;
 using Alza.Domain.Services;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Alza.Application.Web.Facades
 {
@@ -11,19 +11,14 @@ namespace Alza.Application.Web.Facades
     public class ProductFacade
     {
         private readonly ProductService productService;
-        private readonly IConfiguration configuration;
-        private static bool UseMockData = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductFacade"/> class.
         /// </summary>
-        /// <param name="configuration">Configuration</param>
         /// <param name="productService">Product service</param>
-        public ProductFacade(IConfiguration configuration, ProductService productService)
+        public ProductFacade(ProductService productService)
         {
-            this.configuration = configuration;
             this.productService = productService;
-            bool.TryParse(configuration["UseMockData"], out UseMockData);
         }
 
         /// <summary>
@@ -31,18 +26,18 @@ namespace Alza.Application.Web.Facades
         /// </summary>
         /// <param name="id">Product id.</param>
         /// <returns>Returns a single instance of the <see cref="Product"/> item.</returns>
-        public Product GetProduct(int id)
+        public async Task<Product> GetProduct(int id)
         {
-            return this.productService.GetProduct(id, UseMockData);
+            return await this.productService.GetProduct(id);
         }
 
         /// <summary>
         /// Gets a collection of all Products.
         /// </summary>
         /// <returns>Returns a collection of the <see cref="Product"/> items.</returns>
-        public IList<Product> GetProducts()
+        public async Task<IList<Product>> GetProducts()
         {
-            return this.productService.GetProducts(UseMockData);
+            return await this.productService.GetProducts();
         }
 
         /// <summary>
@@ -51,19 +46,20 @@ namespace Alza.Application.Web.Facades
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        public IList<Product> GetProducts(int page, int? pageSize)
+        public async Task<IList<Product>> GetProducts(int page, int? pageSize)
         {
-            return this.productService.GetProducts(page, pageSize, UseMockData);
+            return await this.productService.GetProducts(page, pageSize);
         }
 
         /// <summary>
-        /// Updates the product (product description).
+        /// Updates a description of the product specified by it's id.
         /// </summary>
-        /// <param name="product">The product to be updated.</param>
-        /// <returns>Returns a value indicating whether the product was successfully updated or not.</returns>
-        public bool UpdateProduct(Product product)
+        /// <param name="id">The product identifier.</param>
+        /// <param name="description">The product description.</param>
+        /// <returns>Returns a value indicating whether the product description was successfully updated or not.</returns>
+        public async Task<bool> UpdateProductDescription(int id, string description)
         {
-            return this.productService.UpdateProduct(product, UseMockData);
+            return await this.productService.UpdateProductDescription(id, description);
         }
     }
 }

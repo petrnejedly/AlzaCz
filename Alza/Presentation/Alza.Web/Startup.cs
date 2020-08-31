@@ -56,7 +56,6 @@ namespace Alza.Web
                 typeof(Application.Web.MappingProfiles.ProductMappingProfile)
             );
 
-            services.AddScoped(typeof(IMockedProductRepository), typeof(MockedProductRepository));
             services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
             services.AddScoped(typeof(ProductService));
             services.AddScoped(typeof(ProductFacade));

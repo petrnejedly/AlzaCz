@@ -19,7 +19,7 @@ namespace Alza.Web.Controllers
         private readonly IConfiguration configuration;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductController"/> class.
+        /// Initializes a new instance of the <see cref="ProductsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="configuration">The configuration.</param>

@@ -1,6 +1,7 @@
 ﻿using Alza.Domain.Abstractions.Repositories;
 using Alza.Domain.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Alza.Domain.Services
 {
@@ -10,38 +11,33 @@ namespace Alza.Domain.Services
     public class ProductService
     {
         private readonly IProductRepository productRepository;
-        private readonly IMockedProductRepository mockedProductRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductService"/> class.
         /// </summary>
         /// <param name="productRepository">Product repository.</param>
-        /// <param name="mockedProductRepository">Mocked product repository.</param>
-        public ProductService(IProductRepository productRepository, IMockedProductRepository mockedProductRepository)
+        public ProductService(IProductRepository productRepository)
         {
             this.productRepository = productRepository;
-            this.mockedProductRepository = mockedProductRepository;
         }
 
         /// <summary>
         /// Gets a single product by it's id.
         /// </summary>
         /// <param name="id">Product id.</param>
-        /// <param name="useMockedData">Use mocked data instead of database data.</param>
         /// <returns>Returns a single instance of the <see cref="Product"/> item.</returns>
-        public Product GetProduct(int id, bool useMockedData = false)
+        public async Task<Product> GetProduct(int id)
         {
-            return (useMockedData) ? this.mockedProductRepository.GetProduct(id) : this.productRepository.GetProduct(id);
+            return await this.productRepository.GetProduct(id);
         }
 
         /// <summary>
         /// Gets a collection of all Products.
         /// </summary>
-        /// <param name="useMockedData">Use mocked data instead of database data.</param>
         /// <returns>Returns a collection of the <see cref="Product"/> items.</returns>
-        public IList<Product> GetProducts(bool useMockedData = false)
+        public async Task<IList<Product>> GetProducts()
         {
-            return (useMockedData) ? this.mockedProductRepository.GetProducts() : this.productRepository.GetProducts();
+            return await this.productRepository.GetProducts();
         }
 
         /// <summary>
@@ -49,23 +45,21 @@ namespace Alza.Domain.Services
         /// </summary>
         /// <param name="page">Current page number.</param>
         /// <param name="pageSize">Current page size.</param>
-        /// <param name="useMockedData">Use mocked data instead of database data.</param>
         /// <returns>Returns a paged collection of the <see cref="Product"/> items.</returns>
-        public IList<Product> GetProducts(int page, int? pageSize, bool useMockedData = false)
+        public async Task<IList<Product>> GetProducts(int page, int? pageSize)
         {
-            return (useMockedData) ? this.mockedProductRepository.GetProducts(page, pageSize) : this.productRepository.GetProducts(page, pageSize);
+            return await this.productRepository.GetProducts(page, pageSize);
         }
 
         /// <summary>
-        /// Updates the product (product description).
-        /// Only live mode (UseMockData: false) is supported.
+        /// Updates a description of the product specified by it's id.
         /// </summary>
-        /// <param name="product">The product to be updated.</param>
-        /// <param name="useMockedData">Update mocked data instead of database data.</param>
-        /// <returns>Returns a value indicating whether the product was successfully updated or not.</returns>
-        public bool UpdateProduct(Product product, bool useMockedData = false)
+        /// <param name="id">The product identifier.</param>
+        /// <param name="description">The product description.</param>
+        /// <returns>Returns a value indicating whether the product description was successfully updated or not.</returns>
+        public async Task<bool> UpdateProductDescription(int id, string description)
         {
-            return (useMockedData) ? this.mockedProductRepository.UpdateProduct(product) : this.productRepository.UpdateProduct(product);
+            return await this.productRepository.UpdateProductDescription(id, description);
         }
     }
 }

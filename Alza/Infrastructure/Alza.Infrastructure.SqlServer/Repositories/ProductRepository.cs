@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Alza.Infrastructure.SqlServer.Repositories
 {
@@ -33,11 +34,11 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public Domain.Entities.Product GetProduct(int id)
+        public async Task<Domain.Entities.Product> GetProduct(int id)
         {
             Entities.Product product = new Entities.Product();
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            await using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand myCmd = connection.CreateCommand())
                 {
@@ -67,7 +68,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                     {
                         string declaringType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name;
                         string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                        throw new Exception($"Error in {declaringType} / {methodName}.", eX);
+                        throw new Exception($"{declaringType} / {methodName} threw an exception.", eX);
                     }
                 }
             }
@@ -76,11 +77,11 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public IList<Domain.Entities.Product> GetProducts()
+        public async Task<IList<Domain.Entities.Product>> GetProducts()
         {
             List<Entities.Product> products = new List<Entities.Product>();
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            await using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand myCmd = connection.CreateCommand())
                 {
@@ -112,7 +113,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                     {
                         string declaringType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name;
                         string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                        throw new Exception($"Error in {declaringType} / {methodName}.", eX);
+                        throw new Exception($"{declaringType} / {methodName} threw an exception.", eX);
                     }
                 }
             }
@@ -121,7 +122,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public IList<Domain.Entities.Product> GetProducts(int page, int? pageSize)
+        public async Task<IList<Domain.Entities.Product>> GetProducts(int page, int? pageSize)
         {
             List<Entities.Product> products = new List<Entities.Product>();
 
@@ -129,7 +130,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
             if (pageIndex < 0) { pageIndex = 0; }
             if (!pageSize.HasValue || pageSize == 0) { pageSize = DefaultPageSize; }
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            await using(SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand myCmd = connection.CreateCommand())
                 {
@@ -175,7 +176,7 @@ namespace Alza.Infrastructure.SqlServer.Repositories
                     {
                         string declaringType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name;
                         string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                        throw new Exception($"Error in {declaringType} / {methodName}.", eX);
+                        throw new Exception($"{declaringType} / {methodName} threw an exception.", eX);
                     }
                 }
             }
@@ -184,32 +185,35 @@ namespace Alza.Infrastructure.SqlServer.Repositories
         }
 
         /// <inheritdoc/>
-        public bool UpdateProduct(Domain.Entities.Product product)
+        public async Task<bool> UpdateProductDescription(int id, string description)
         {
             bool returnSuccess = false;
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            await using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand myCmd = connection.CreateCommand())
                 {
                     myCmd.CommandType = CommandType.StoredProcedure;
                     myCmd.CommandText = "[dbo].[Alza_Products_Update]";
-                    myCmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = product.Id;
-                    myCmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = product.Description;
+                    myCmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = id;
+                    if (!String.IsNullOrEmpty(description))
+                        myCmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = description;
+                    else
+                        myCmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = System.DBNull.Value;
                     myCmd.Parameters.Add("@IdentityName", SqlDbType.NVarChar, 255).Value = "Web";
                     myCmd.Parameters.Add("@IdentityIP", SqlDbType.NVarChar, 255).Value = "0.0.0.0";
                     try
                     {
                         myCmd.Connection.Open();
-                        myCmd.ExecuteNonQuery();
+                        int rowsAffected = myCmd.ExecuteNonQuery();
                         myCmd.Connection.Close();
-                        returnSuccess = true;
+                        returnSuccess = (rowsAffected > 0);
                     }
                     catch (Exception eX)
                     {
                         string declaringType = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name;
                         string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                        throw new Exception($"Error in {declaringType} / {methodName}.", eX);
+                        throw new Exception($"{declaringType} / {methodName} threw an exception.", eX);
                     }
                 }
             }

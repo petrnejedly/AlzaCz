@@ -4,10 +4,13 @@ using Alza.Application.Web.Models;
 using Alza.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using System;
 
 namespace Alza.Web.Controllers
 {
@@ -20,57 +23,88 @@ namespace Alza.Web.Controllers
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
     [Produces("application/json")]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly ProductFacade productFacade;
         private readonly IConfiguration configuration;
         private readonly IMapper mapper;
+        private readonly ILogger<ProductsController> logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductController"/> class.
+        /// Initializes a new instance of the <see cref="ProductsController"/> class.
         /// </summary>
         /// <param name="productFacade">An instance of the Product facade.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="mapper">An instance of the Automapper class.</param>
-        public ProductController(ProductFacade productFacade, IConfiguration configuration, IMapper mapper)
+        /// <param name="logger">The logger.</param>
+        public ProductsController(ProductFacade productFacade, IConfiguration configuration, IMapper mapper, ILogger<ProductsController> logger)
         {
             this.productFacade = productFacade;
             this.configuration = configuration;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         /// <summary>
         /// Gets a single product by it's id.
         /// </summary>
         /// <param name="id">Product id.</param>
-        /// <returns>Returns a single instance of the <see cref="Product"/> item.</returns>
+        /// <returns>Returns a single instance of the <see cref="ProductViewModel"/> item.</returns>
         [HttpGet("{id}")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("2.0")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a single product by it's id (v1 and v2).", Type = typeof(IActionResult))]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            Product product = this.productFacade.GetProduct(id);
+            if (id < 1)
+            {
+                return this.BadRequest("The product id must be greater than zero.");
+            }
 
-            ProductViewModel productViewModel = (product != null) ? this.mapper.Map<ProductViewModel>(product, opts =>
+            Product product = new Product();
+
+            try
+            {
+                product = await this.productFacade.GetProduct(id);
+            }
+            catch (Exception eX)
+            {
+                this.logger.LogError(eX.Message, eX);
+            }
+
+            if (product == null || product.Id == 0)
+            {
+                return this.NotFound();
+            }
+
+            ProductViewModel productViewModel = this.mapper.Map<ProductViewModel>(product, opts =>
             {
                 opts.Items["ImageUrlPrefix"] = configuration["ImageUrlPrefix"];
                 opts.Items["ImageNull"] = configuration["ImageNull"];
-            }) : new ProductViewModel();
+            });
 
-            return Ok(productViewModel);
+            return this.Ok(productViewModel);
         }
 
         /// <summary>
-        /// Gets a collection of all products.
+        /// Gets a collection of all Products.
         /// </summary>
         /// <returns>Returns a collection of the <see cref="ProductViewModel"/> items.</returns>
         [HttpGet]
         [MapToApiVersion("1.0")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a collection of all products (v1).", Type = typeof(IActionResult))]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            IList<Product> products = this.productFacade.GetProducts();
+            IList<Product> products = new List<Product>();
+
+            try
+            {
+                products = await this.productFacade.GetProducts();
+            }
+            catch (Exception eX)
+            {
+                this.logger.LogError(eX.Message, eX);
+            }
 
             IList<ProductViewModel> productViewModels = (products != null && products.Any()) ? this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
             {
@@ -78,19 +112,28 @@ namespace Alza.Web.Controllers
                 opts.Items["ImageNull"] = configuration["ImageNull"];
             }).ToList() : new List<ProductViewModel>();
 
-            return Ok(productViewModels.ToArray());
+            return this.Ok(productViewModels.ToArray());
         }
 
         /// <summary>
-        /// Gets a collection of all products.
+        /// Gets a paged collection of Products.
         /// </summary>
         /// <returns>Returns a collection of the <see cref="ProductViewModel"/> items.</returns>
         [HttpGet("{page}/{pageSize}")]
         [MapToApiVersion("2.0")]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a collection of all products (v2).", Type = typeof(IActionResult))]
-        public IActionResult Get(int page, int? pageSize)
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a paged collection of products (v2).", Type = typeof(IActionResult))]
+        public async Task<IActionResult> Get([FromRoute] int page, [FromRoute] int? pageSize)
         {
-            IList<Product> products = this.productFacade.GetProducts(page, pageSize);
+            IList<Product> products = new List<Product>();
+
+            try
+            {
+                products = await this.productFacade.GetProducts(page, pageSize);
+            }
+            catch (Exception eX)
+            {
+                this.logger.LogError(eX.Message, eX);
+            }
 
             IList<ProductViewModel> productViewModels = (products != null && products.Any()) ? this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
             {
@@ -98,46 +141,43 @@ namespace Alza.Web.Controllers
                 opts.Items["ImageNull"] = configuration["ImageNull"];
             }).ToList() : new List<ProductViewModel>();
 
-            return Ok(productViewModels.ToArray());
+            return this.Ok(productViewModels.ToArray());
         }
 
         /// <summary>
-        /// Updates the product (product description).
+        /// Updates a description of the product specified by it's id.
         /// </summary>
-        /// <param name="productUpdateRequest">An instance of the <see cref="ProductUpdateRequest" />.</param>
+        /// <param name="id">The product identifier.</param>
+        /// <param name="description">The product description.</param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPatch("{id}")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("2.0")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Updates the product (product description).", Type = typeof(IActionResult))]
-        public IActionResult Update([FromBody]ProductUpdateRequest productUpdateRequest)
+        public async Task<IActionResult> Get([FromRoute] int id, [FromBody]string description)
         {
-            if (productUpdateRequest == null)
+            if (id == 0)
             {
-                return this.BadRequest("The ProductUpdateRequest is null.");
+                return this.BadRequest("The product id must not equal to zero.");
             }
 
-            if (productUpdateRequest.Id == 0)
+            bool returnSucces = false;
+
+            try
             {
-                return this.BadRequest("The product id is 0.");
+                returnSucces = await this.productFacade.UpdateProductDescription(id, description);
             }
-
-            Product product = this.productFacade.GetProduct(productUpdateRequest.Id);
-            if (product == null)
+            catch (Exception eX)
             {
-                return this.BadRequest($"The product with id {productUpdateRequest.Id} does not seem to exist.");
+                this.logger.LogError(eX.Message, eX);
             }
-
-            product.Description = productUpdateRequest.Description;
-
-            bool returnSucces = this.productFacade.UpdateProduct(product);
 
             if (!returnSucces)
             {
                 return this.Problem(title: "Description not updated", detail: "The product description was not updated.");
             }
 
-            return this.Ok(productUpdateRequest);
+            return this.Ok($"The description has been successfully updated.");
         }
     }
 }
