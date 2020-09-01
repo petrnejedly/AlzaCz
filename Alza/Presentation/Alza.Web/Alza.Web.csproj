@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Projects\AlzaCz\Alza\Presentation\Alza.Web\Alza.Web.xml</DocumentationFile>
+    <DocumentationFile>Alza.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -67,7 +67,7 @@
             </summary>
             <returns>Returns a collection of the <see cref="T:Alza.Application.Web.Models.ProductViewModel"/> items.</returns>
         </member>
-        <member name="M:Alza.Web.Controllers.ProductsController.Get(System.Int32,System.String)">
+        <member name="M:Alza.Web.Controllers.ProductsController.UpdateDescription(System.Int32,System.String)">
             <summary>
             Updates a description of the product specified by it's id.
             </summary>

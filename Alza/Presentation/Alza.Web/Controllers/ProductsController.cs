@@ -97,6 +97,7 @@ namespace Alza.Web.Controllers
         [HttpGet]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a collection of all products (v1).", Type = typeof(IActionResult))]
         public async Task<IActionResult> Get()
         {
@@ -117,6 +118,11 @@ namespace Alza.Web.Controllers
                 opts.Items["ImageNull"] = configuration["ImageNull"];
             }).ToList();
 
+            if (products.Count == 0)
+            {
+                return this.NoContent();
+            }
+
             return this.Ok(productViewModels.ToArray());
         }
 
@@ -127,6 +133,7 @@ namespace Alza.Web.Controllers
         [HttpGet("{page}/{pageSize}")]
         [MapToApiVersion("2.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Gets a paged collection of products (v2).", Type = typeof(IActionResult))]
         public async Task<IActionResult> Get([FromRoute] int page, [FromRoute] int? pageSize)
         {
@@ -147,6 +154,11 @@ namespace Alza.Web.Controllers
                 opts.Items["ImageNull"] = configuration["ImageNull"];
             }).ToList();
 
+            if (products.Count == 0)
+            {
+                return this.NoContent();
+            }
+
             return this.Ok(productViewModels.ToArray());
         }
 
@@ -162,7 +174,7 @@ namespace Alza.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Updates the product (product description).", Type = typeof(IActionResult))]
-        public async Task<IActionResult> Get([FromRoute] int id, [FromBody]string description)
+        public async Task<IActionResult> UpdateDescription([FromRoute] int id, [FromBody]string description)
         {
             if (id < 1)
             {

@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Alza.Application.Web.Facades;
+using Alza.Application.Web.MappingProfiles;
 using Alza.Domain.Abstractions.Repositories;
 using Alza.Domain.Entities;
 using Alza.Domain.Services;
 using Alza.Web.Controllers;
-using Alza.Web.Tests.Repositories;
 using AutoMapper;
 using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -17,38 +19,142 @@ namespace Alza.Web.Tests.Controllers
 {
     public class ProductsControllerTest
     {
-        [Fact]
-        public async System.Threading.Tasks.Task Get_When_FoundAsync()
+        [Theory]
+        [InlineData(1)]
+        public async Task Get_When_FoundAsync(int productId)
         {
-            ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            IConfigurationRoot configurationRoot = configurationBuilder.Build();
+            var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(x => x.GetProductAsync(productId)).Returns(() => Task.FromResult(new Product() { Id = productId, Description = "Some product description" }));
 
-            MapperConfiguration mapperConfiguration = new MapperConfiguration(new MapperConfigurationExpression());
-            Mapper mapper = new Mapper(mapperConfiguration);
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
 
-            Mock mockLogger = new Mock<ILogger<ProductsController>>();
-            ILogger<ProductsController> logger = (ILogger<ProductsController>)mockLogger.Object;
+            // act
+            IActionResult result = await productsController.Get(productId);
 
-            //MockedProductRepository mockedProductRepository = new MockedProductRepository(mapper);
-
-            Mock mockProductRepository = new Mock<IProductRepository>();
-            //mockProductRepository.Setup(x => x.GetProduct(1)).Returns(() => new Product() { Description = "ssdfsdf" });
-
-            IProductRepository productRepository = (IProductRepository)mockProductRepository.Object;
-            ProductService productService = new ProductService(productRepository);
-            ProductFacade productFacade = new ProductFacade(productService);
-            ProductsController productsController = new ProductsController(productFacade, configurationRoot, mapper, logger);
-
-            IActionResult result = await productsController.Get(1).ConfigureAwait(false);
+            // assert
             Assert.IsType<OkObjectResult>(result);
         }
 
+        [Theory]
+        [InlineData(1234)]
+        public async Task Get_When_NotFoundAsync(int productId)
+        {
+            var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(x => x.GetProductAsync(productId)).Returns(() => Task.FromResult<Product>(null));
 
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
 
+            // act
+            IActionResult result = await productsController.Get(productId);
 
+            // assert
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
 
-        #region private List<Product> mockedProducts = new List<Product>()
-        private List<Product> mockedProducts = new List<Product>()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task Get_When_InvalidIdAsync(int productId)
+        {
+            // arrange
+            var mapperConfiguration = new MapperConfiguration(new MapperConfigurationExpression());
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
+
+            // act
+            IActionResult result = await productsController.Get(productId);
+
+            // assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task GetProducts_When_Exists_Async()
+        {
+            // arrange
+            var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(x => x.GetProductsAsync()).Returns(() => Task.FromResult(mockedProducts));
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
+
+            // act
+            IActionResult result = await productsController.Get();
+
+            // assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task GetProducts_When_Empty_Async()
+        {
+            // arrange
+            var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(x => x.GetProductsAsync()).Returns(() => Task.FromResult<IList<Product>>(new List<Product>()));
+
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
+
+            // act
+            IActionResult result = await productsController.Get();
+
+            // assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        private IConfigurationRoot Configuration
+        {
+            get
+            {
+                MemoryConfigurationSource source = new MemoryConfigurationSource
+                {
+                    InitialData = new Dictionary<string, string>()
+                    {
+                        { "ImageUrlPrefix" , "https://cdn.alza.cz/" },
+                        { "ImageNull", "https://satyr.io/1024x768/lightgreen?text=Alza+rulez" }
+                    }
+                };
+                //var memoryConfigurationProvider = new MemoryConfigurationProvider(source);
+                ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+                configurationBuilder.Add(source);
+                IConfigurationRoot configurationRoot = configurationBuilder.Build();
+                return configurationRoot;
+            }
+        }
+
+        #region private IList<Product> mockedProducts = new List<Product>()
+        private IList<Product> mockedProducts = new List<Product>()
         {
             new Product()
             {
@@ -428,7 +534,7 @@ namespace Alza.Web.Tests.Controllers
             },
             new Product()
             {
-                Id = 10,
+                Id = 48,
                 Name = "AfterShokz Trekz Titanium šedá",
                 ImgUri = "/ImgW.ashx?fd=f3&cd=AKZ120k3",
                 Price = 1990.00M,
@@ -436,7 +542,7 @@ namespace Alza.Web.Tests.Controllers
             },
             new Product()
             {
-                Id = 10,
+                Id = 49,
                 Name = "JVC HA-S90BN-Z ",
                 ImgUri = "/ImgW.ashx?fd=f3&cd=JVC274l",
                 Price = 2339.00M,
@@ -444,7 +550,7 @@ namespace Alza.Web.Tests.Controllers
             },
             new Product()
             {
-                Id = 10,
+                Id = 50,
                 Name = "JVC HA-S30BT R",
                 ImgUri = "/ImgW.ashx?fd=f3&cd=JVC274b",
                 Price = 989.00M,
