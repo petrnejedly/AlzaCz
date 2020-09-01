@@ -61,7 +61,7 @@ The solution is divided into following parts
 
 ### Update the product's description (HttpPatch)
 - /api/products/updatedescription/1 (HttpPatch)
-(```curl -X PATCH "https://localhost:44364/api/v2/Products/Get/1" -H "accept: application/json" -H "Content-Type: application/json" -d "\"new description\""```)
+(```curl -X PATCH "https://localhost:44364/api/v2/Products/updatedescription/1" -H "accept: application/json" -H "Content-Type: application/json" -d "\"new description\""```)
 
 (You need to use Swagger, Postman or some other tool to query this API endpoint using HttpPatch)
 
