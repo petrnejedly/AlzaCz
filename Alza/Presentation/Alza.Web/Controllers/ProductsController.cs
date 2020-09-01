@@ -197,7 +197,7 @@ namespace Alza.Web.Controllers
                 return this.Problem(title: "Description not updated", detail: "The description has not been updated.");
             }
 
-            return this.Ok(new ApiResponseViewModel() { Message = $"The description has been successfully updated." });
+            return this.Ok(new ApiResponseViewModel() { Message = "The description has been successfully updated." });
         }
     }
 }
