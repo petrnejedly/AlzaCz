@@ -148,16 +148,16 @@ namespace Alza.Web.Controllers
                 this.logger.LogError(eX.Message, eX);
             }
 
+            if (products.Count == 0)
+            {
+                return this.NoContent();
+            }
+
             IList<ProductViewModel> productViewModels = this.mapper.Map<IEnumerable<ProductViewModel>>(products, opts =>
             {
                 opts.Items["ImageUrlPrefix"] = configuration["ImageUrlPrefix"];
                 opts.Items["ImageNull"] = configuration["ImageNull"];
             }).ToList();
-
-            if (products.Count == 0)
-            {
-                return this.NoContent();
-            }
 
             return this.Ok(productViewModels.ToArray());
         }

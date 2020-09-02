@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Alza.Application.Web.Facades;
 using Alza.Application.Web.MappingProfiles;
@@ -21,7 +22,7 @@ namespace Alza.Web.Tests.Controllers
     {
         [Theory]
         [InlineData(1)]
-        public async Task Get_When_FoundAsync(int productId)
+        public async Task Get_Single_When_FoundAsync(int productId)
         {
             var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
             var mapper = new Mapper(mapperConfiguration);
@@ -44,7 +45,7 @@ namespace Alza.Web.Tests.Controllers
 
         [Theory]
         [InlineData(1234)]
-        public async Task Get_When_NotFoundAsync(int productId)
+        public async Task Get_Single_When_NotFoundAsync(int productId)
         {
             var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
             var mapper = new Mapper(mapperConfiguration);
@@ -68,7 +69,7 @@ namespace Alza.Web.Tests.Controllers
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public async Task Get_When_InvalidIdAsync(int productId)
+        public async Task Get_Single_When_InvalidIdAsync(int productId)
         {
             // arrange
             var mapperConfiguration = new MapperConfiguration(new MapperConfigurationExpression());
@@ -89,7 +90,7 @@ namespace Alza.Web.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetProducts_When_Exists_Async()
+        public async Task Get_All_When_Exists_Async()
         {
             // arrange
             var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
@@ -111,7 +112,7 @@ namespace Alza.Web.Tests.Controllers
         }
 
         [Fact]
-        public async Task GetProducts_When_Empty_Async()
+        public async Task Get_All_When_Empty_Async()
         {
             // arrange
             var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
@@ -133,6 +134,58 @@ namespace Alza.Web.Tests.Controllers
             Assert.IsType<NoContentResult>(result);
         }
 
+        [Fact]
+        public async Task Get_Paged_When_Exists_Async()
+        {
+            int page = 1;
+            int pageSize = 10;
+
+            // arrange
+            var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(x => x.GetProductsAsync(page, pageSize)).Returns(() => Task.FromResult(mockedProducts));
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
+
+            // act
+            IActionResult result = await productsController.Get(page, pageSize);
+
+            // assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task Get_Paged_When_Empty_Async()
+        {
+            int page = 10;
+            int pageSize = 10;
+            int pageIndex = page - 1;
+
+            // arrange
+            var mapperConfiguration = new MapperConfiguration(config => config.AddProfile(new ProductMappingProfile()));
+            var mapper = new Mapper(mapperConfiguration);
+            var mockLogger = new Mock<ILogger<ProductsController>>();
+            var logger = mockLogger.Object;
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(x => x.GetProductsAsync(page, pageSize)).Returns(() => Task.FromResult((IList<Product>)this.mockedProducts.Skip(pageIndex * pageSize).Take(pageSize)));
+            var productRepository = mockProductRepository.Object;
+            var productService = new ProductService(productRepository);
+            var productFacade = new ProductFacade(productService);
+            var productsController = new ProductsController(productFacade, this.Configuration, mapper, logger);
+
+            // act
+            IActionResult result = await productsController.Get(page, pageSize);
+
+            // assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        #region private IConfigurationRoot Configuration
         private IConfigurationRoot Configuration
         {
             get
@@ -152,6 +205,7 @@ namespace Alza.Web.Tests.Controllers
                 return configurationRoot;
             }
         }
+        #endregion
 
         #region private IList<Product> mockedProducts = new List<Product>()
         private IList<Product> mockedProducts = new List<Product>()
