@@ -42,7 +42,7 @@ The solution is divided into following parts
     "ImageNull": "https://satyr.io/1024x768/lightgreen?text=Alza+rulez"
 }
 ```
-- Replace The connection string credentials with appropriate values
+- Replace the connection string credentials with appropriate values
 - Hit Ctrl + F5 to run the project in the browser
 
 ## List of exposed API URLs
